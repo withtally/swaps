@@ -1,6 +1,9 @@
 # swaps
 
-Creating swaps on Tally's Create Proposal. For more info, refer to [Swaps](https://docs.tally.xyz/knowledge-base/proposals/creating-proposals/swaps) in Tally docs.
+Tally uses this code used to create [CoW swap](https://cow.fi/) proposals on [Tally](https://tally.xyz/). 
+Tally's no-code flow Create Proposal Tool that allows DAO members to create, propose, and place CoW's "Milkman" orders directly from DAO treasuries.
+
+For more info, refer to [Swaps](https://docs.tally.xyz/knowledge-base/proposals/creating-proposals/swaps) in Tally docs.
 
 ## Diagram
 
@@ -10,38 +13,38 @@ Creating swaps on Tally's Create Proposal. For more info, refer to [Swaps](https
 
 ### `cow` package
 
-The `cow` package is designed to interact with the CoW API. It is particularly focused on quoting, pricing, and order management using abstractions from withtally/tally packages.
+The `cow` package is designed to interact with the CoW API. It is particularly focused on quoting, pricing, and order management using abstractions from Tally packages.
 
 **Key Features:**
 
-Quote: Gets quote for a swap, including details like sell and buy tokens, amounts, and fees.
+`Quote`: Gets quote for a swap, including details like sell and buy tokens, amounts, and fees.
 
-NativePrice: Gets the native price for a token.
+`NativePrice`: Gets the native price for a token.
 
-Orders: Gets orders for an order contract.
+`Orders`: Gets orders for an order contract.
 
 ### `graph` package
 
-The graph package is used to provide GraphQL resolvers for querying the Tally API.
+The `graph` package is used to provide GraphQL resolvers for querying the Tally API.
 
 **Key Features:**
 
-AvailableSwaps: Retrieves available swap assets based on a given governor ID.
+`AvailableSwaps`: Retrieves available swap assets based on a given governor ID.
 
-QuoteSwap: Provides swap quotes for a given set of tokens and amounts.
+`QuoteSwap`: Provides swap quotes for a given set of tokens and amounts.
 
 
 ## Web
 
 The TypeScript files define components and logic for the creation and execution of swap proposalson Tally.
 
-TallyAction:
+`TallyAction`:
 Constructs and encodes blockchain transactions, including target addresses, values, and calldata.
 Provides methods to encode data for the Tally API and for blockchain execution.
 
-SwapAction (extends TallyAction):
+`SwapAction` (extends `TallyAction`):
 Specializes in swap-related actions, including encoding and preparing data for swap transactions.
 Manages swap-specific data such as contract addresses, token information, price checkers, and slippage rates.
 
-SwapRecipe Component:
+`SwapRecipe` Component:
 React functional component for displaying and managing swap actions within the Tally create proposal interface.
