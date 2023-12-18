@@ -4,7 +4,7 @@ Creating swaps on Tally's Create Proposal. For more info, refer to [Swaps](https
 
 ## Diagram
 
-
+![Swaps on Tally](https://github.com/withtally/swaps/blob/ba3404b870affc7c5e21c3f9348a2825f4324c9c/swaps-on-tally.png)
 
 ## API
 
