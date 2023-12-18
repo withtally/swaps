@@ -224,25 +224,3 @@ func (fcc *FakeClient) NativePrice(ctx context.Context, tokenID types.EVMAccount
 func (fcc *FakeClient) Orders(ctx context.Context, chainID types.ChainID, address common.Address) ([]Order, error) {
 	return []Order{}, nil
 }
-
-type GetSwapTokensResponse struct {
-	Tokens []SwapToken `json:"tokens"`
-}
-
-func (fcc *FakeClient) GetSwapTokens() (interface{}, error) {
-	res, err := http.Get("https://raw.githubusercontent.com/cowprotocol/token-lists/develop/src/public/CowSwap.json")
-	if err != nil {
-		return nil, fmt.Errorf("getting native price data")
-	}
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return nil, fmt.Errorf("reading native price data")
-	}
-
-	r := &GetSwapTokensResponse{}
-	if err := json.Unmarshal(body, &r); err != nil {
-		return nil, fmt.Errorf("marshalling native price data")
-	}
-
-	return nil, nil
-}

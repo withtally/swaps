@@ -6,504 +6,66 @@ import (
 )
 
 type SwapToken struct {
+	Address  string
 	ID       *proto.AccountID
-	Symbol   string `json:"symbol"`
-	Name     string `json:"name"`
-	Decimals int64  `json:"decimals"`
-	Logo     string `json:"logo"`
+	Symbol   string
+	Name     string
+	Decimals int64
+	Logo     string
 }
 
-// SwapTokens is a list of tokens that can be bought on cowswap
+// SwapTokens is a list of tokens that can be swapped on Tally with CoW
 var SwapTokens = []SwapToken{
 	{
 		Symbol:   "USDC",
 		Name:     "USD Coin",
-		ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48")),
+		Address:  "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
 		Decimals: 6,
 		Logo:     "https://tokens.1inch.io/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
 	},
 	{
 		Symbol:   "WETH",
 		Name:     "Wrapped Ether",
-		ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")),
+		Address:  "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
 		Decimals: 18,
 		Logo:     "https://tokens.1inch.io/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png",
 	},
 	{
 		Symbol:   "USDT",
 		Name:     "Tether USD",
-		ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xdAC17F958D2ee523a2206206994597C13D831ec7")),
+		Address:  "0xdAC17F958D2ee523a2206206994597C13D831ec7",
 		Decimals: 6,
 		Logo:     "https://tokens.1inch.io/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
 	},
 	{
 		Symbol:   "DAI",
 		Name:     "Dai Stablecoin",
-		ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6B175474E89094C44Da98b954EedeAC495271d0F")),
+		Address:  "0x6B175474E89094C44Da98b954EedeAC495271d0F",
 		Decimals: 18,
 		Logo:     "https://tokens.1inch.io/0x6b175474e89094c44da98b954eedeac495271d0f.png",
 	},
-	// {
-	// 	Symbol:   "GNO",
-	// 	Name:     "Gnosis",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6810e776880C02933D47DB1b9fc05908e5386b96")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x6810e776880c02933d47db1b9fc05908e5386b96.png",
-	// },
-	// {
-	// 	Symbol:   "OHM",
-	// 	Name:     "Olympus",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5")),
-	// 	Decimals: 9,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmPqfuMJG3Kp7PADcneabNckgppNRF1SpkSXCLoUGev8yG",
-	// },
-	// {
-	// 	Symbol:   "WBTC",
-	// 	Name:     "Wrapped BTC",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599")),
-	// 	Decimals: 8,
-	// 	Logo:     "https://tokens.1inch.io/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
-	// },
-	// {
-	// 	Symbol:   "STRONG",
-	// 	Name:     "Strong",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x990f341946A3fdB507aE7e52d17851B87168017c")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x990f341946a3fdb507ae7e52d17851b87168017c.png",
-	// },
-	// {
-	// 	Symbol:   "FRAX",
-	// 	Name:     "Frax",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x853d955aCEf822Db058eb8505911ED77F175b99e")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x853d955acef822db058eb8505911ed77f175b99e.png",
-	// },
-	// {
-	// 	Symbol:   "CRV",
-	// 	Name:     "Curve DAO Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xD533a949740bb3306d119CC777fa900bA034cd52")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xd533a949740bb3306d119cc777fa900ba034cd52.png",
-	// },
-	// {
-	// 	Symbol:   "CVX",
-	// 	Name:     "Convex Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b.png",
-	// },
-	// {
-	// 	Symbol:   "UNI",
-	// 	Name:     "Uniswap",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984.png",
-	// },
-	// {
-	// 	Symbol:   "FXS",
-	// 	Name:     "Frax Share",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0.png",
-	// },
-	// {
-	// 	Symbol:   "AAVE",
-	// 	Name:     "Aave Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9.png",
-	// },
-	// {
-	// 	Symbol:   "LUSD",
-	// 	Name:     "LUSD Stablecoin",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x5f98805a4e8be255a32880fdec7f6728c6568ba0.png",
-	// },
-	// {
-	// 	Symbol:   "MIM",
-	// 	Name:     "Magic Internet Money",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3.png",
-	// },
-	// {
-	// 	Symbol:   "1INCH",
-	// 	Name:     "1INCH Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x111111111117dC0aa78b770fA6A738034120C302")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x111111111117dc0aa78b770fa6a738034120c302.png",
-	// },
-	// {
-	// 	Symbol:   "SPELL",
-	// 	Name:     "Spell Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x090185f2135308BaD17527004364eBcC2D37e5F6")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x090185f2135308bad17527004364ebcc2d37e5f6.png",
-	// },
-	// {
-	// 	Symbol:   "LDO",
-	// 	Name:     "Lido DAO Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x5a98fcbea516cf06857215779fd812ca3bef1b32.png",
-	// },
-	// {
-	// 	Symbol:   "MIST",
-	// 	Name:     "Alchemist",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x88ACDd2a6425c3FaAE4Bc9650Fd7E27e0Bebb7aB")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x88acdd2a6425c3faae4bc9650fd7e27e0bebb7ab.png",
-	// },
-	// {
-	// 	Symbol:   "MATIC",
-	// 	Name:     "Matic Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png",
-	// },
-	// {
-	// 	Symbol:   "wNXM",
-	// 	Name:     "Wrapped NXM",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x0d438F3b5175Bebc262bF23753C1E53d03432bDE")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x0d438f3b5175bebc262bf23753c1e53d03432bde.png",
-	// },
-	// {
-	// 	Symbol:   "LINK",
-	// 	Name:     "Chain Link",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x514910771AF9Ca656af840dff83E8264EcF986CA")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x514910771af9ca656af840dff83e8264ecf986ca.png",
-	// },
-	// {
-	// 	Symbol:   "FTM",
-	// 	Name:     "Fantom Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x4E15361FD6b4BB609Fa63C81A2be19d873717870")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x4e15361fd6b4bb609fa63c81a2be19d873717870.png",
-	// },
-	// {
-	// 	Symbol:   "SUSHI",
-	// 	Name:     "SushiToken",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x6b3595068778dd592e39a122f4f5a5cf09c90fe2.png",
-	// },
-	// {
-	// 	Symbol:   "ICE",
-	// 	Name:     "IceToken",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xf16e81dce15B08F326220742020379B855B87DF9")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xf16e81dce15b08f326220742020379b855b87df9.png",
-	// },
-	// {
-	// 	Symbol:   "BAL",
-	// 	Name:     "Balancer",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xba100000625a3754423978a60c9317c58a424e3D")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xba100000625a3754423978a60c9317c58a424e3d.png",
-	// },
-	// {
-	// 	Symbol:   "YFI",
-	// 	Name:     "yearn.finance",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e.png",
-	// },
-	// {
-	// 	Symbol:   "HEX",
-	// 	Name:     "HEX",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xb591e99aFfE9f32EaA6214F7b7629768c40Eeb39")),
-	// 	Decimals: 8,
-	// 	Logo:     "https://tokens.1inch.io/0x2b591e99afe9f32eaa6214f7b7629768c40eeb39.png",
-	// },
-	// {
-	// 	Symbol:   "TRIBE",
-	// 	Name:     "Tribe",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xc7283b66eb1eb5fb86327f08e1b5816b0720212b.png",
-	// },
-	// {
-	// 	Symbol:   "SAND",
-	// 	Name:     "SAND",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x3845badAde8e6dFF049820680d1F14bD3903a5d0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x3845badade8e6dff049820680d1f14bd3903a5d0.png",
-	// },
-	// {
-	// 	Symbol:   "EDEN",
-	// 	Name:     "Eden",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x1559FA1b8F28238FD5D76D9f434ad86FD20D1559")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x1559fa1b8f28238fd5d76d9f434ad86fd20d1559.png",
-	// },
-	// {
-	// 	Symbol:   "AMPL",
-	// 	Name:     "Ampleforth",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xD46bA6D942050d489DBd938a2C909A5d5039A161")),
-	// 	Decimals: 9,
-	// 	Logo:     "https://tokens.1inch.io/0xd46ba6d942050d489dbd938a2c909a5d5039a161.png",
-	// },
-	// {
-	// 	Symbol:   "STAKE",
-	// 	Name:     "STAKE",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x0Ae055097C6d159879521C384F1D2123D1f195e6")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x0ae055097c6d159879521c384f1d2123d1f195e6.png",
-	// },
-	// {
-	// 	Symbol:   "SHIB",
-	// 	Name:     "SHIBA INU",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce.png",
-	// },
-	// {
-	// 	Symbol:   "LQTY",
-	// 	Name:     "LQTY",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d.png",
-	// },
-	// {
-	// 	Symbol:   "FEI",
-	// 	Name:     "Fei USD",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x956F47F50A910163D8BF957Cf5846D573E7f87CA")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x956f47f50a910163d8bf957cf5846d573e7f87ca.png",
-	// },
-	// {
-	// 	Symbol:   "KP3R",
-	// 	Name:     "Keep3rV1",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44.png",
-	// },
-	// {
-	// 	Symbol:   "WARP",
-	// 	Name:     "Warp Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xEd40834A13129509A89be39a9bE9C0E96A0DDd71")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xed40834a13129509a89be39a9be9c0e96a0ddd71.png",
-	// },
-	// {
-	// 	Symbol:   "BADGER",
-	// 	Name:     "Badger",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x3472A5A71965499acd81997a54BBA8D852C6E53d")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x3472a5a71965499acd81997a54bba8d852c6e53d.png",
-	// },
-	// {
-	// 	Symbol:   "SNX",
-	// 	Name:     "Synthetix Network Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f.png",
-	// },
-	// {
-	// 	Symbol:   "ALCX",
-	// 	Name:     "Alchemix",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xdbdb4d16eda451d0503b854cf79d55697f90c8df.png",
-	// },
-	// {
-	// 	Symbol:   "GTC",
-	// 	Name:     "Gitcoin",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xDe30da39c46104798bB5aA3fe8B9e0e1F348163F")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xde30da39c46104798bb5aa3fe8b9e0e1f348163f.png",
-	// },
-	// {
-	// 	Symbol:   "USDN",
-	// 	Name:     "Neutrino",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x674C6Ad92Fd080e4004b2312b45f796a192D27a0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x674c6ad92fd080e4004b2312b45f796a192d27a0.png",
-	// },
-	// {
-	// 	Symbol:   "FLX",
-	// 	Name:     "Flex Ungovernance Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6243d8CEA23066d098a15582d81a598b4e8391F4")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x6243d8cea23066d098a15582d81a598b4e8391f4.png",
-	// },
-	// {
-	// 	Symbol:   "TOKE",
-	// 	Name:     "Tokemak",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x2e9d63788249371f1DFC918a52f8d799F4a38C94")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x2e9d63788249371f1dfc918a52f8d799f4a38c94.png",
-	// },
-	// {
-	// 	Symbol:   "RBN",
-	// 	Name:     "Ribbon",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x6123B0049F904d730dB3C36a31167D9d4121fA6B")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x6123b0049f904d730db3c36a31167d9d4121fa6b.png",
-	// },
-	// {
-	// 	Symbol:   "SYN",
-	// 	Name:     "Synapse",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0x0f2d719407fdbeff09d87557abb7232601fd9f29.png",
-	// },
-	// {
-	// 	Symbol:   "FOLD",
-	// 	Name:     "Manifold Finance",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xd084944d3c05CD115C09d072B9F44bA3E0E45921")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xd084944d3c05cd115c09d072b9f44ba3e0e45921.png",
-	// },
-	// {
-	// 	Symbol:   "VISR",
-	// 	Name:     "VISOR",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xF938424F7210f31dF2Aee3011291b658f872e91e")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://tokens.1inch.io/0xf938424f7210f31df2aee3011291b658f872e91e.png",
-	// },
-	// {
-	// 	Symbol:   "COW",
-	// 	Name:     "CoW Protocol Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gnosis.mypinata.cloud/ipfs/Qme9B6jRpGtZsRFcPjHvA5T4ugFuL4c3SzWfxyMPa59AMo",
-	// },
-	// {
-	// 	Symbol:   "COW",
-	// 	Name:     "CoW Protocol Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "100"), "0x177127622c4A00F3d409B75571e12cB3c8973d3c")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gnosis.mypinata.cloud/ipfs/Qme9B6jRpGtZsRFcPjHvA5T4ugFuL4c3SzWfxyMPa59AMo",
-	// },
-	// {
-	// 	Symbol:   "HOP",
-	// 	Name:     "Hop",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmSxuQpx3UadQY4B2i5AQAaU97JZqkhcm9dCZXXNsNziYR",
-	// },
-	// {
-	// 	Symbol:   "icETH",
-	// 	Name:     "Interest Compounding ETH Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x7C07F7aBe10CE8e33DC6C5aD68FE033085256A84")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmVhF8WZ1knNtug6MxzbNAXuy1R1RwiN7vuDzRg7rN5gYn",
-	// },
-	// {
-	// 	Symbol:   "ACX",
-	// 	Name:     "Across Protocol Token",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gnosis.mypinata.cloud/ipfs/QmUoNa4KGgnjUTZZCxGfhrEjRYHHTuCSvPXemzYNPnXS9o",
-	// },
-	// {
-	// 	Symbol:   "GIV",
-	// 	Name:     "Giveth",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x900dB999074d9277c5DA2A43F252D74366230DA0")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmPNEmEz9FoxeXRkpr9dvaeg4n7Gg24uv5ykePVrY38df8",
-	// },
-	// {
-	// 	Symbol:   "alUSD",
-	// 	Name:     "Alchemix USD",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/Qmf4wqJi6G6kuMhwKbiv8n6JfNJYXPf9BvwaA4b8KgBV8d",
-	// },
-	// {
-	// 	Symbol:   "AURA",
-	// 	Name:     "Aura Finance",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmcBPqkGYc7c1HNekQp98uk5mHSpbgc83kw4VcLcgR2utL",
-	// },
-	// {
-	// 	Symbol:   "auraBAL",
-	// 	Name:     "Aura BAL",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x616e8BfA43F920657B3497DBf40D6b1A02D4608d")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmQMZCDeq9ryW92u4w6o5GHRVHVmbkAUZ7CX6oXiFyDozP",
-	// },
-	// {
-	// 	Symbol:   "dsETH",
-	// 	Name:     "Diversified Staked ETH Index (dsETH)",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x341c05c0E9b33C0E38d64de76516b2Ce970bB3BE")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmQdY1CaAUJ1xLeR7tHLbDmH5q2cKoXDaC99KUZVJ6MtxU",
-	// },
-	// {
-	// 	Symbol:   "DPI",
-	// 	Name:     "DeFi Pulse Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmQdUquL6hCAXVMNHLjnJECTgVxZHsTWQwWKMMpEhqaiw9",
-	// },
-	// {
-	// 	Symbol:   "MVI",
-	// 	Name:     "Metaverse Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x72e364F2ABdC788b7E918bc238B21f109Cd634D7")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmXuSCtT64PDUQ2MZYeBP7ESYHQ5DrSPxx2Nguxoh8ht3i",
-	// },
-	// {
-	// 	Symbol:   "BED",
-	// 	Name:     "Bankless BED Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x2aF1dF3AB0ab157e1E2Ad8F88A7D04fbea0c7dc6")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmVDi7bWp8fbbf76vLcDQBhXtVRJSYMspRvrWRJAwATj83",
-	// },
-	// {
-	// 	Symbol:   "ETH2x-FLI",
-	// 	Name:     "ETH 2x Flexible Leverage Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xAa6E8127831c9DE45ae56bB1b0d4D4Da6e5665BD")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmXGX9qiyNJmQyZYqnSvQPNW9iYtjYbsHNG9SBjVUZv6Cj",
-	// },
-	// {
-	// 	Symbol:   "BTC2x-FLI",
-	// 	Name:     "BTC 2x Flexible Leverage Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x0B498ff89709d3838a063f1dFA463091F9801c2b")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmXGX9qiyNJmQyZYqnSvQPNW9iYtjYbsHNG9SBjVUZv6Cj",
-	// },
-	// {
-	// 	Symbol:   "EURe",
-	// 	Name:     "Monerium EUR emoney",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "100"), "0xcB444e90D8198415266c6a2724b7900fb12FC56E")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmeBpksABjsnVRjgFSSycYqT1zGiG8wBL5Ut3zkhXFVWyV",
-	// },
-	// {
-	// 	Symbol:   "BTRFLY",
-	// 	Name:     "Redacted Protocol",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xc55126051B22eBb829D00368f4B12Bde432de5Da")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmcfUASZpQ8wxKgdPytULDuyjfSZ4fzcL4b1P3u4tqY2C1",
-	// },
-	// {
-	// 	Symbol:   "gtcETH",
-	// 	Name:     "Gitcoin Staked ETH Index",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0x36c833Eed0D376f75D1ff9dFDeE260191336065e")),
-	// 	Decimals: 18,
-	// 	Logo:     "https://gateway.pinata.cloud/ipfs/QmQqhbpWjQhw2i4DoLgcpRFfoNYrvfx1yuCjszKH8YCAon",
-	// },
-	// {
-	// 	Symbol:   "FLEX",
-	// 	ID:       proto.AccountIDToProto(types.UnsafeAccountID(types.UnsafeChainID("eip155", "1"), "0xFcF8eda095e37A41e002E266DaAD7efC1579bc0A")),
-	// 	Name:     "Flex 0xfCf8edA095E37a41E002E266dAAD7EfC1579bc0a",
-	// 	Decimals: 18,
-	// 	Logo:     "https://raw.githubusercontent.com/cowprotocol/token-lists/main/src/public/images/1/0xfcf8eda095e37a41e002e266daad7efc1579bc0a/logo.png",
-	// },
 }
 
 var SwapTokensMap = map[string]SwapToken{}
 
 func init() {
+	c, err := types.NewChainID("eip155", "1")
+	if err != nil {
+		fmt.Errorf("creating mainnet chain id %s", err)
+		return
+	}
+
 	for _, t := range SwapTokens {
-		SwapTokensMap[t.ID.String()] = t
+		id, err := types.NewAccountID(c, t.Address)
+		if err != nil {
+			fmt.Errorf("creating asset id %s", err)
+			return
+		}
+
+		tid := proto.AccountIDToProto(id)
+
+		t.ID = tid
+
+		SwapTokensMap[tid.String()] = t
 	}
 }

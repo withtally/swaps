@@ -33,13 +33,6 @@ func (r *queryResolver) AvailableSwaps(ctx context.Context, governorID *proto.Ac
 			return nil, status.Error(codes.Internal, ErrInternalServerError)
 		}
 
-		// FOR BETA release, limit sellable assets to those listed in cow.SwapTokensMap
-
-		// token is sellable asset if CowSwap api returns a native price
-		// if _, err := r.Cow.NativePrice(ctx, tid); err == nil {
-		// 	assets.Sell = append(assets.Sell, &b)
-		// }
-
 		// token is sellable asset if is listed in cow.SwapTokensMap or is Ether
 		protoTID := proto.AccountIDToProto(tid.AccountID)
 		if _, ok := cow.SwapTokensMap[protoTID.String()]; ok || b.ContractName == "Ether" {
