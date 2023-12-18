@@ -1,0 +1,29 @@
+query AvailableSwaps($governorId: AccountID!) {
+  availableSwaps(governorID: $governorId) {
+    buy {
+      id
+      name
+      symbol
+      logo
+      decimals
+    }
+    sell {
+      address
+      balance
+      decimals
+      logo
+      name
+      quoteRate
+      symbol
+    }
+  }
+}
+
+query QuoteSwap($governorID: AccountID!, $buy: AccountID!, $sell: AccountID!, $sellAmount: Uint256!) {
+  quoteSwap(governorID: $governorID, buy: $buy, sell: $sell, sellAmount: $sellAmount) {
+    buyAmount
+    buyTokenQuoteRate
+    sellAmount
+    feeAmount
+  }
+}
