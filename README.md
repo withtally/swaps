@@ -1,7 +1,8 @@
 # swaps
 
-This repository contains a reference implementation for adding CoW Swaps to an application. Tally uses this code used to create [CoW swap](https://cow.fi/) proposals on [Tally](https://tally.xyz/). 
-Tally's no-code flow Create Proposal Tool that allows DAO members to create, propose, and place CoW's "Milkman" orders directly from DAO treasuries.
+This repository contains a reference implementation for adding CoW Swaps to an application. 
+
+Tally uses this code used to create [CoW swap](https://cow.fi/) proposals on [Tally](https://tally.xyz/). Tally's no-code flow Create Proposal Tool that allows DAO members to create, propose, and place CoW's "Milkman" orders directly from DAO treasuries.
 
 For more info, refer to [Swaps](https://docs.tally.xyz/knowledge-base/proposals/creating-proposals/swaps) in Tally docs.
 
