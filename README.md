@@ -59,6 +59,7 @@ Here is the methodology used when testing swaps on Tally:
 1. Deployed Governor contract for testing, use [the Gov Deployer script](https://github.com/withtally/gov_deployer?tab=readme-ov-file#deployments)
 2. [Add the DAO to Tally](https://docs.tally.xyz/knowledge-base/managing-a-dao)
 3. Add an asset like ETH or USDC to the DAO’s treasury
-4. [Create a swap proposal](https://docs.tally.xyz/knowledge-base/proposals/creating-proposals/swaps#swap-proposal-in-5-steps)
+4. [Create a swap proposal](https://docs.tally.xyz/knowledge-base/proposals/creating-proposals/swaps#swap-proposal-in-5-steps) to exchange the asset for another one.
+5. Pass and execute the proposal
 
 
